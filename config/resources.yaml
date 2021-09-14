@@ -1,0 +1,59 @@
+runtime: # has to be specified in min
+  BaseRecalibrator: 180
+  GatherBQSRReports: 5
+  ApplyBQSR: 180
+  GatherRecalBamFiles: 120
+  SortBam: 230
+  IndexBam: 180
+  HaplotypeCaller: 600
+  MergeHaplotypeCaller: 30
+  CombineGVCFs: 300
+  GenotypeGVCFs: 300
+  MergeCohortVCFs: 10
+  VQSR_indel: 30
+  VQSR_snp: 45
+  ApplyVQSR_indel: 10
+  ApplyVQSR_snp: 10
+  SelectVariants: 5
+  VEP: 1000
+
+
+memory: # has to be specified in MB
+  BaseRecalibrator: 50000
+  GatherBQSRReports: 5000
+  ApplyBQSR: 45000
+  GatherRecalBamFiles: 5000
+  SortBam: 40000
+  IndexBam: 5000
+  HaplotypeCaller: 80000
+  MergeHaplotypeCaller: 5000
+  CombineGVCFs: 85000
+  GenotypeGVCFs: 40000
+  MergeCohortVCFs: 5000
+  VQSR_indel: 15000
+  VQSR_snp: 15000
+  ApplyVQSR_indel: 6000
+  ApplyVQSR_snp: 6000
+  SelectVariants: 5000
+  VEP: 15000
+
+
+threads:
+  BaseRecalibrator: 15
+  GatherBQSRReports: 2
+  ApplyBQSR: 25
+  GatherRecalBamFiles: 2
+  SortBam: 20
+  IndexBam: 16
+  HaplotypeCaller: 25
+  MergeHaplotypeCaller: 2
+  CombineGVCFs: 10
+  GenotypeGVCFs: 15
+  MergeCohortVCFs: 5
+  VQSR_indel: 3
+  VQSR_snp: 3
+  ApplyVQSR_indel: 3
+  ApplyVQSR_snp: 3
+  SelectVariants: 3
+  VEP: 40
+
