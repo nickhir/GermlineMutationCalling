@@ -1,43 +1,40 @@
-# specify a bunch of file paths to the programs used in the analysis
-# use absolute paths. Less portable but more stable.
-# you have to activate the conda enviroment that was generated
-# (https://github.com/broadinstitute/gatk -> Python Dependencies)
+### RECOMMENDED TO USE ABSOLUTE PATHS
 
 ### PATH TO sambamba
-sambamba: /g/huber/users/hirschmueller/miniconda3/envs/utils/bin/sambamba
+sambamba: /g/miniconda3/envs/utils/bin/sambamba
 
 ### PATH TO samtools
-samtools: /g/huber/users/hirschmueller/miniconda3/envs/utils/bin/samtools
+samtools: /g/miniconda3/envs/utils/bin/samtools
 
 ### PATH TO bcftools
-bcftools: /g/huber/users/hirschmueller/miniconda3/envs/utils/bin/bcftools
+bcftools: /g/miniconda3/envs/utils/bin/bcftools
 
 ### PATH TO GATK4
-GATK: /g/huber/users/hirschmueller/software/gatk-4.2.0.0/gatk
+GATK: /g/software/gatk-4.2.0.0/gatk
 
 ### SPECIFY PATHS FOR VEP
-vep: /g/huber/users/hirschmueller/software/ensembl-vep/vep
-vep_cache: /g/huber/users/hirschmueller/software/ensembl-vep/vep-cache
+vep: /g/software/ensembl-vep/vep
+vep_cache: /g/software/ensembl-vep/vep-cache
 
-# Specify path to the reference genome
-# sequence dictionary must be in same directory (created with CreateSequenceDictionary)
-reference: /g/huber/users/hirschmueller/germline_calling/inputs/Homo_sapiens_assembly19.fa
-reference_dict: /g/huber/users/hirschmueller/germline_calling/inputs/Homo_sapiens_assembly19.dict
+### SPECIFY PATH TO REFERENCE GENOME AND SEQUENCE DICTONARY (MUST BE IN SAME DIRECTORY AND CREATED WITH CreateSequenceDictionary)
+### IDEALLY USE THE SAME REFERENCE GENOME THAT WAS USED FOR ALIGNMENT
+reference: /g/germline_calling/inputs/Homo_sapiens_assembly19.fa
+reference_dict: /g/germline_calling/inputs/Homo_sapiens_assembly19.dict
 
-# Path to dbSNP file.
-dbSNP: /g/huber/users/hirschmueller/germline_calling/inputs/dbsnp_138.b37.verified.vcf.gz
+### PATH TO dbSNP FILE (CHECK IF REFERENCE GENOME MATCHES)
+### i.e. from here ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/dbsnp_138.b37.vcf.gz
+dbSNP: /g/germline_calling/inputs/dbsnp_138.b37.verified.vcf.gz
 
-# PATH TO HIGH CONFIDENCE INDEL AND SNPS
-hapmap: /g/huber/users/hirschmueller/germline_calling/inputs/hapmap_3.3.b37.verified.vcf.gz
-omni: /g/huber/users/hirschmueller/germline_calling/inputs/1000G_omni2.5.b37.verified.vcf.gz
-thousandG_phase1_snps_high_confidence: /g/huber/users/hirschmueller/germline_calling/inputs/1000G_phase1.snps.high_confidence.b37.verified.vcf.gz
-mills_indels: /g/huber/users/hirschmueller/germline_calling/inputs/Mills_and_1000G_gold_standard.indels.b37.verified.vcf.gz
-axiom_poly: /g/huber/users/hirschmueller/germline_calling/inputs/Axiom_Exome_Plus.genotypes.all_populations.poly.verified.vcf.gz
+### PATH TO HIGH CONFIDENCE INDEL AND SNPS (CHECK IF REFERENCE GENOME MATCHES)
+hapmap: /g/germline_calling/inputs/hapmap_3.3.b37.verified.vcf.gz # ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/hapmap_3.3.b37.vcf.gz
+omni: /g/germline_calling/inputs/1000G_omni2.5.b37.verified.vcf.gz # ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/1000G_omni2.5.b37.vcf.gz
+thousandG_phase1_snps_high_confidence: /g/germline_calling/inputs/1000G_phase1.snps.high_confidence.b37.verified.vcf.gz # ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/Mills_and_1000G_gold_standard.indels.b37.vcf.gz
+mills_indels: /g/germline_calling/inputs/Mills_and_1000G_gold_standard.indels.b37.verified.vcf.gz # ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/Mills_and_1000G_gold_standard.indels.b37.vcf.gz
+axiom_poly: /g/germline_calling/inputs/Axiom_Exome_Plus.genotypes.all_populations.poly.verified.vcf.gz # https://data.broadinstitute.org/snowman/hg19/variant_calling/vqsr_resources/Exome/v2/Axiom_Exome_Plus.genotypes.all_populations.poly.vcf.gz
 
-# WE SCATTER THE COMPUTATIONALLY EXPENSIVE HAPLOTYPECALLER OVER INTERVALS. THESE ARE CREATED USING
+# WE SCATTER THE COMPUTATIONALLY EXPENSIVE TASKS OVER INTERVALS. THESE ARE CREATED USING
 # GATK SplitIntervals, i.e. like this:
-
-# gatk SplitIntervals -R Homo_sapiens_assembly19.fa --scatter-count 25 -O WGS-interval-files-excluding-supercontigs
+# gatk SplitIntervals -R Homo_sapiens_assembly19.fa --scatter-count 50 -O WGS-interval-files-excluding-supercontigs
 # -XL consensusBlacklist_ENCODE_hg19.bed -XL MT -XL GL000207.1 -XL GL000226.1 -XL GL000229.1 -XL GL000231.1
 # -XL GL000210.1 -XL GL000239.1 -XL GL000235.1 -XL GL000201.1 -XL  GL000247.1  -XL GL000245.1 -XL  GL000197.1
 # -XL GL000203.1 -XL  GL000246.1  -XL GL000249.1 -XL  GL000196.1 -XL GL000248.1 -XL GL000244.1 -XL GL000238.1
@@ -50,33 +47,28 @@ axiom_poly: /g/huber/users/hirschmueller/germline_calling/inputs/Axiom_Exome_Plu
 
 # this creates a directory with the different intervals. Afterwards create a file which contains the paths to the
 # individual intervals, i.e. with `readlink -f WGS-interval-files-excluding-supercontigs/* > intervals.txt`
-intervals: /g/huber/users/hirschmueller/germline_calling/inputs/WGS-interval-files-excluding-supercontigs/intervals.txt
+# INTERVALS FOR hg19 ARE ALREADY INCLUDED IN THE REPOSITORY.
+intervals: inputs/WGS-interval-files-excluding-supercontigs/intervals.txt
 
-# PATH TO FILE WHICH CONTAINS ALL USED CHROMOSOMES (WE ONLY INCLUDE AUTOSOMES AND SEX CHROMOSOMES)
-chromosomes: /g/huber/users/hirschmueller/germline_calling/inputs/chromosomes.txt
+### PATH TO FILE WHICH CONTAINS ALL USED CHROMOSOMES (WE ONLY INCLUDE AUTOSOMES AND SEX CHROMOSOMES)
+### YOU CAN USE THE SEQUENCE DICTIONARY TO GET THE CHROMOSOME NAMES
+chromosomes: /g/germline_calling/inputs/chromosomes.txt
 
 ### INPUT
 ### PATH TO THE DIRECTORY WHERE THE SNAKEFILE IS. INSIDE THAT DIRECTORY ALL RESULTS WILL BE CREATED
-path: /g/huber/users/hirschmueller/germline_calling/UPDATED-PIPELINE
+path: /g/germline_calling/UPDATED-PIPELINE
 
 ### PATH TO DIRECTORY IN WHICH TEMPORARILY FILES SHOULD BE CREATED. THIS DIRECTORY HAS TO ALREADY EXIST!
 tmp_dir: /scratch/hirschmu
 
 # PATH TO THE DIRECTORY WHERE THE COHORT GVCF SHOULD BE CREATED
-cohort_dir: /g/huber/users/hirschmueller/germline_calling/UPDATED-PIPELINE/cohort
+cohort_dir: /g/germline_calling/UPDATED-PIPELINE/cohort
 
-# PATH TO FILE WHICH WILL CONTAIN ALL THE SAMPLE NAMES USED IN THE BAM FILE. THIS FILE GETS CREATED AUTOMATICALLY AND IS
-# USEFUL FOR SUBSETTING A SPECIFIC PATIENT LATER.
-bam_sample_names: /g/huber/users/hirschmueller/germline_calling/UPDATED-PIPELINE/bam_sample_names.txt
-
-# Actual input files.
-# This workflow starts of we BAM files where duplicates are already marked (i.e. with sambamba markdup)
-
-# specify a patient identifier and as well as the corresponding BAM file. The order MUST match, i.e.
-# first patient ID should match the first BAM file. Bam files have to be indexed, i.e. with samtools index
-
+### THIS WORKFLOW STARTS OF WITH BAM FILES WHERE DUPLICATES ARE ALREADY MARKED (I.E. WITH SAMBAMBA MARKDUP)
+### EACH BAM FILE GETS ASSIGNED TO A CERTAIN IDENTIFIER. THE ORDER MUST MATCH, I.E.
+## FIRST PATIENT ID SHOULD MATCH THE FIRST BAM FILE. BAM FILES HAVE TO BE INDEXED, I.E. WITH SAMTOOLS INDEX
 patient_id:
   - H005-00ML
 
 bam_files:
-  - /g/huber/projects/nct/cll/ProcessedData/WGS/BAM/control/control_H005-00ML_merged.mdup.bam
+  - /g/WGS/BAM/control/H005-00ML_merged.mdup.bam
