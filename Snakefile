@@ -2,7 +2,7 @@ import yaml
 import subprocess
 
 # load in the config file which contains all the information needed for the workflow
-with open("config_wgs.yaml") as f:
+with open("config/config_wgs.yaml") as f:
     config = yaml.safe_load(f)
 
 ### PROGRAMS USED
@@ -41,16 +41,6 @@ samples = {}
 for i in range(len(patient_id)):
     samples[patient_id[i]] = [bam_files[i]]
 
-# We also create a file which contains the sample names of each BAM file.
-# This can be used to select a sample of interest later.
-bam_sample_names = config["bam_sample_names"]
-for bam in bam_files:
-    bam_sample_name = subprocess.run(
-        f"{samtools} view -H {bam} | grep '^@RG' | sed 's/.*SM:\([^\\t]*\).*/\\1/g' | uniq",
-        shell=True, stdout=subprocess.PIPE).stdout.decode("UTF-8").strip()
-
-    with open(bam_sample_names, "a") as f:
-        f.write(f"{bam_sample_name}\t{bam}\n")
 
 rule all:
     input:
