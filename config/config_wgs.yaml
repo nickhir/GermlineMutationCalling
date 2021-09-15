@@ -59,7 +59,7 @@ chromosomes: /g/germline_calling/inputs/chromosomes.txt
 path: /g/germline_calling/UPDATED-PIPELINE
 
 ### PATH TO DIRECTORY IN WHICH TEMPORARILY FILES SHOULD BE CREATED. THIS DIRECTORY HAS TO ALREADY EXIST!
-tmp_dir: /scratch/hirschmu
+tmp_dir: /scratch/user
 
 # PATH TO THE DIRECTORY WHERE THE COHORT GVCF SHOULD BE CREATED
 cohort_dir: /g/germline_calling/UPDATED-PIPELINE/cohort
