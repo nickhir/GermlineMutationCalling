@@ -197,7 +197,7 @@ rule SortBam:
     benchmark:
              benchmark=path + "/{patient}/benchmark/SortBam.txt"
 
-    threads: resources["threads"]["SortBam"]
+    threads: resources["threads"]["SortBam"]*3
 
     resources:
              runtime_min=resources["runtime"]["SortBam"],
