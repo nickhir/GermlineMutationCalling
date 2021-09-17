@@ -10,17 +10,17 @@
 ### BUT THE SPECIFIED VALUES HERE MIGHT SERVE AS A SORT OF GUIDELINE FOR INITAL TESTING
 
 runtime: # has to be specified in min
-  BaseRecalibrator: 120
+  BaseRecalibrator: 180
   GatherBQSRReports: 5
-  ApplyBQSR: 100
-  GatherRecalBamFiles: 75
+  ApplyBQSR: 180
+  GatherRecalBamFiles: 120
   SortBam: 300
   IndexBam: 180
   HaplotypeCaller: 600
-  MergeHaplotypeCaller: 30
+  MergeHaplotypeCaller: 70
   CombineGVCFs: 300
   GenotypeGVCFs: 300
-  MergeCohortVCFs: 10
+  MergeCohortVCFs: 60
   VQSR_indel: 30
   VQSR_snp: 45
   ApplyVQSR_indel: 10
@@ -37,10 +37,10 @@ memory: # has to be specified in MB
   SortBam: 40000
   IndexBam: 5000
   HaplotypeCaller: 80000
-  MergeHaplotypeCaller: 5000
+  MergeHaplotypeCaller: 10000
   CombineGVCFs: 85000
   GenotypeGVCFs: 40000
-  MergeCohortVCFs: 5000
+  MergeCohortVCFs: 10000
   VQSR_indel: 15000
   VQSR_snp: 15000
   ApplyVQSR_indel: 6000
@@ -50,9 +50,9 @@ memory: # has to be specified in MB
 
 
 threads:
-  BaseRecalibrator: 20
+  BaseRecalibrator: 15
   GatherBQSRReports: 2
-  ApplyBQSR: 30
+  ApplyBQSR: 25
   GatherRecalBamFiles: 2
   SortBam: 10
   IndexBam: 16
@@ -67,4 +67,5 @@ threads:
   ApplyVQSR_snp: 3
   SelectVariants: 3
   VEP: 40
+
 
