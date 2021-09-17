@@ -100,7 +100,7 @@ rule ApplyVQSR_indel:
          tranche_files=cohort_dir + "/filtration/cohort_indel.tranches",
 
     output:
-          indel_recalibrated_cohort=cohort_dir + "/cohort.indel.recalibrated.vcf.gz"
+          indel_recalibrated_cohort=temp(cohort_dir + "/cohort.indel.recalibrated.vcf.gz")
 
     benchmark:
              benchmark=cohort_dir + "/benchmark/ApplyVQSR_indel.txt"
@@ -173,6 +173,10 @@ rule SelectVariants:
     resources:
              runtime_min=resources["runtime"]["SelectVariants"],
              mem_mb=resources["memory"]["SelectVariants"]
+    params: cohort_dir=cohort_dir
 
     shell:
          "{input.bcftools} view -f PASS {input.filtered_vcf} -o {output.pass_only_vcf} -O z &> {log.err_SelectVariants} \n"
+         "rm -rf {params.cohort_dir}/filtration \n"
+         "rm {params.cohort_dir}/cohort.indel.recalibrated.vcf.gz.tbi \n"
+         "rm {params.cohort_dir}/cohort.vcf.gz.tbi \n"

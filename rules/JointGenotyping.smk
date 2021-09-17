@@ -215,8 +215,8 @@ rule MergeCohortVCFs:
          chromosomes=chromosomes
 
     output:
-          merged_cohort_vcf=cohort_dir + "/cohort.vcf.gz",
-          sites_only_vcf=(cohort_dir + "/cohort.sites.only.vcf.gz")
+          merged_cohort_vcf=temp(cohort_dir + "/cohort.vcf.gz"),
+          sites_only_vcf=temp(cohort_dir + "/cohort.sites.only.vcf.gz")
 
     benchmark:
              benchmark=cohort_dir + "/benchmark/MergeCohortVCFs.txt"
