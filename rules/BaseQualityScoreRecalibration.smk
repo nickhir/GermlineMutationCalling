@@ -222,7 +222,7 @@ rule IndexBam:
     benchmark:
              benchmark=path + "/{patient}/benchmark/IndexBam.txt"
 
-    threads: resources["threads"]["IndexBam"]
+    threads: resources["threads"]["IndexBam"]*3
 
     resources:
              runtime_min=resources["runtime"]["IndexBam"],
