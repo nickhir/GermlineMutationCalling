@@ -48,6 +48,7 @@ This directory will **not** be created automatically.
 
 `-j` specifies the number of jobs/rules should be submitted in parallel.
 
+I recommand running this command in a detached session with `tmux` or `screen`.
 ## Output
 Below is the output of the `tree` command, after the workflow has finished for one patient H005-00ML. 
 Usually you would include many patients simultaneously (>50). This is just to illustrate the created output files. 
