@@ -43,7 +43,123 @@ After setting up all the config files and installing all tools, you can simply r
 snakemake --latency-wait 300 -j 5 --cluster "sbatch --mem={resources.mem_mb} --time {resources.runtime_min} --cpus-per-task {threads} --job-name={rule}.%j --output snakemake_cluster_submit/{rule}.%j.out --mail-type=FAIL"
 ```
 This assumes that the cluster you are using is running [SLURM](https://slurm.schedmd.com/documentation.html).
-If this is not the case, you have to adjust the command after `--cluster`.
+If this is not the case, you have to adjust the command after `--cluster`. The log information of each job will be safed in the `snakemake_cluster_submit` folder.
+This folder will **not** be created automatically.
 
 `-j` specifies the number of jobs/rules should be submitted in parallel.
+
 ## Output
+Below is the output of the `tree` command, after the workflow has finished. 
+```bash
+.
+├── cohort
+│ ├── benchmark
+│ │ ├── ApplyVQSR_indel.txt
+│ │ ├── ApplyVQSR_snp.txt
+│ │ ├── CombineGVCFs.txt
+│ │ ├── GenotypeGVCFs.txt
+│ │ ├── MergeCohortVCFs.txt
+│ │ ├── SelectVariants.txt
+│ │ ├── VEP.txt
+│ │ ├── VQSR_indel.txt
+│ │ └── VQSR_snp.txt
+│ ├── cohort.indel.recalibrated.vcf.gz
+│ ├── cohort.indel.recalibrated.vcf.gz.tbi
+│ ├── cohort.recalibrated.pass.vep.vcf.gz
+│ ├── cohort.recalibrated.pass.vep.vcf.gz_summary.html
+│ ├── cohort.recalibrated.vcf.gz
+│ ├── cohort.recalibrated.vcf.gz.tbi
+│ ├── cohort.sites.only.vcf.gz
+│ ├── cohort.vcf.gz
+│ ├── cohort.vcf.gz.tbi
+│ ├── filtration
+│ │ ├── cohort_indel.recal
+│ │ ├── cohort_indel.recal.idx
+│ │ ├── cohort_indel.tranches
+│ │ ├── cohort_snp.recal
+│ │ ├── cohort_snp.recal.idx
+│ │ └── cohort_snp.tranches
+│ └── logs
+│     ├── ApplyVQSR_indel.out
+│     ├── ApplyVQSR_snp.out
+│     ├── CombineGVCFs
+│     ├── CombineGVCFs.1.out
+│     ├── CombineGVCFs.2.out
+│     ├── ...
+│     ├── ...
+│     ├── CombineGVCFs.Y.out
+│     ├── GenotypeGVCFs.1.out
+│     ├── GenotypeGVCFs.2.out
+│     ├── ...
+│     ├── ...
+│     ├── GenotypeGVCFs.Y.out
+│     ├── MakeSitesOnly.out
+│     ├── MergeCohortVCFs.out
+│     ├── SelectVariants.err
+│     ├── VEP.out
+│     ├── VQSR_indel.out
+│     └── VQSR_snp.out
+├── config
+│ ├── config_wgs.yaml
+│ └── resources.yaml
+├── H005-00ML
+│ ├── benchmark
+│ │ ├── ApplyBQSR.txt
+│ │ ├── BaseRecalibrator.txt
+│ │ ├── GatherBQSRReports.txt
+│ │ ├── GatherRecalBamFiles.txt
+│ │ ├── HaplotypeCaller.txt
+│ │ ├── IndexBam.txt
+│ │ ├── MergeHaplotypeCaller.txt
+│ │ └── SortBam.txt
+│ ├── H005-00ML.germline.merged.g.vcf.gz
+│ ├── H005-00ML.germline.merged.g.vcf.gz.tbi
+│ └── logs
+│     ├── ApplyBQSR
+│     ├── ApplyBQSR.0000-scattered.interval_list.out
+│     ├── ApplyBQSR.0001-scattered.interval_list.out
+│     ├── ...
+│     ├── ...
+│     ├── ApplyBQSR.0049-scattered.interval_list.out
+│     ├── BaseRecalibrator
+│     ├── BaseRecalibrator.0000-scattered.interval_list.out
+│     ├── BaseRecalibrator.0001-scattered.interval_list.out
+│     ├── ...
+│     ├── ...
+│     ├── BaseRecalibrator.0049-scattered.interval_list.out
+│     ├── GatherBQSRReports.out
+│     ├── GatherRecalBamFiles.out
+│     ├── HaplotypeCaller
+│     ├── HaplotypeCaller.0000-scattered.interval_list.out
+│     ├── HaplotypeCaller.0001-scattered.interval_list.out
+│     ├── ...
+│     ├── ...
+│     ├── HaplotypeCaller.0049-scattered.interval_list.out
+│     ├── IndexBam.out
+│     ├── MergeHaplotypeCaller.out
+│     └── SortBam.out
+├── rules
+│ ├── BaseQualityScoreRecalibration.smk
+│ ├── JointGenotyping.smk
+│ ├── VEP.smk
+│ └── VQSR.smk
+├── Snakefile
+├── snakemake_cluster_submit
+│ ├── ApplyBQSR.24720887.out
+│ ├── ApplyVQSR_snp.24777265.out
+│ ├── BaseRecalibrator.24710227.out
+│ ├── CombineGVCFs.24772984.out
+│ ├── GatherBQSRReports.24715726.out
+│ ├── GatherRecalBamFiles.24722478.out
+│ ├── GenotypeGVCFs.24773026.out
+│ ├── HaplotypeCaller.24769848.out
+│ ├── IndexBam.24768728.out
+│ ├── MergeCohortVCFs.24776018.out
+│ ├── MergeHaplotypeCaller.24772183.out
+│ ├── SelectVariants.24777733.out
+│ ├── SortBam.24768066.out
+│ ├── VEP.24777739.out
+│ ├── VQSR_indel.24776035.out
+│ └── VQSR_snp.24776036.out
+
+```
