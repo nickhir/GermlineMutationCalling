@@ -40,10 +40,10 @@ links to some reference resources. Be careful, they are all specific for the GRC
 
 After setting up all the config files and installing all tools, you can simply run: 
 ```bash
-snakemake --latency-wait 300 -j 5 --cluster "sbatch --mem={resources.mem_mb} --time {resources.runtime_min} --cpus-per-task {threads} --job-name={rule}.%j --output snakemake_cluster_submit/{rule}.%j.out --mail-type=FAIL"
+snakemake --latency-wait 300 -j 5 --cluster "sbatch --mem={resources.mem_mb} --time {resources.runtime_min} --cpus-per-task {threads} --job-name={rule}.%j --output snakemake_cluster_submit_log/{rule}.%j.out --mail-type=FAIL"
 ```
 This assumes that the cluster you are using is running [SLURM](https://slurm.schedmd.com/documentation.html).
-If this is not the case, you have to adjust the command after `--cluster`. The log information of each job will be safed in the `snakemake_cluster_submit` directory.
+If this is not the case, you have to adjust the command after `--cluster`. The log information of each job will be safed in the `snakemake_cluster_submit_log` directory.
 This directory will **not** be created automatically.
 
 `-j` specifies the number of jobs/rules should be submitted in parallel.
@@ -133,7 +133,7 @@ Usually you would include many patients simultaneously (>50). This is just to il
 │ ├── VEP.smk
 │ └── VQSR.smk
 ├── Snakefile
-├── snakemake_cluster_submit
+├── snakemake_cluster_submit_log
 │ ├── ApplyBQSR.24720887.out
 │ ├── ApplyVQSR_snp.24777265.out
 │ ├── BaseRecalibrator.24710227.out
