@@ -49,7 +49,8 @@ This folder will **not** be created automatically.
 `-j` specifies the number of jobs/rules should be submitted in parallel.
 
 ## Output
-Below is the output of the `tree` command, after the workflow has finished. 
+Below is the output of the `tree` command, after the workflow has finished for one patient H005-00ML. 
+Usually you would include many patients simultaneously (>50). This is just to illustrate the created output files. 
 ```bash
 .
 ├── cohort
@@ -63,22 +64,10 @@ Below is the output of the `tree` command, after the workflow has finished.
 │ │ ├── VEP.txt
 │ │ ├── VQSR_indel.txt
 │ │ └── VQSR_snp.txt
-│ ├── cohort.indel.recalibrated.vcf.gz
-│ ├── cohort.indel.recalibrated.vcf.gz.tbi
 │ ├── cohort.recalibrated.pass.vep.vcf.gz
 │ ├── cohort.recalibrated.pass.vep.vcf.gz_summary.html
 │ ├── cohort.recalibrated.vcf.gz
 │ ├── cohort.recalibrated.vcf.gz.tbi
-│ ├── cohort.sites.only.vcf.gz
-│ ├── cohort.vcf.gz
-│ ├── cohort.vcf.gz.tbi
-│ ├── filtration
-│ │ ├── cohort_indel.recal
-│ │ ├── cohort_indel.recal.idx
-│ │ ├── cohort_indel.tranches
-│ │ ├── cohort_snp.recal
-│ │ ├── cohort_snp.recal.idx
-│ │ └── cohort_snp.tranches
 │ └── logs
 │     ├── ApplyVQSR_indel.out
 │     ├── ApplyVQSR_snp.out
@@ -161,5 +150,9 @@ Below is the output of the `tree` command, after the workflow has finished.
 │ ├── VEP.24777739.out
 │ ├── VQSR_indel.24776035.out
 │ └── VQSR_snp.24776036.out
-
 ```
+For each analyzed patient, a seperate folder gets created. Along with the patient specific gvcf file, this folder contains log files for all the processing steps that 
+were performed for that patient (`log` directory) as well as benchmarks for each rule, e.g. how long the step took or how much CPU/RAM was used (`benchmark` directory).
+
+The `cohort` folder contains the multi-sample VCF file, which gets created after performing the joint variant calling. This VCF file contains genotype information about all patients.
+ 
