@@ -43,8 +43,8 @@ After setting up all the config files and installing all tools, you can simply r
 snakemake --latency-wait 300 -j 5 --cluster "sbatch --mem={resources.mem_mb} --time {resources.runtime_min} --cpus-per-task {threads} --job-name={rule}.%j --output snakemake_cluster_submit/{rule}.%j.out --mail-type=FAIL"
 ```
 This assumes that the cluster you are using is running [SLURM](https://slurm.schedmd.com/documentation.html).
-If this is not the case, you have to adjust the command after `--cluster`. The log information of each job will be safed in the `snakemake_cluster_submit` folder.
-This folder will **not** be created automatically.
+If this is not the case, you have to adjust the command after `--cluster`. The log information of each job will be safed in the `snakemake_cluster_submit` directory.
+This directory will **not** be created automatically.
 
 `-j` specifies the number of jobs/rules should be submitted in parallel.
 
@@ -151,8 +151,11 @@ Usually you would include many patients simultaneously (>50). This is just to il
 │ ├── VQSR_indel.24776035.out
 │ └── VQSR_snp.24776036.out
 ```
-For each analyzed patient, a seperate folder gets created. Along with the patient specific gvcf file, this folder contains log files for all the processing steps that 
+For each analyzed patient, a seperate directory gets created. Along with the patient specific gvcf file, this directory contains log files for all the processing steps that 
 were performed for that patient (`log` directory) as well as benchmarks for each rule, e.g. how long the step took or how much CPU/RAM was used (`benchmark` directory).
 
-The `cohort` folder contains the multi-sample VCF file, which gets created after performing the joint variant calling. This VCF file contains genotype information about all patients.
- 
+The `cohort` directory contains the multi-sample VCF file, which gets created after performing the joint variant calling. 
+The `cohort.recalibrated.vcf.gz` is the product of GATKs [Variant Quality Score Recalibration](https://gatk.broadinstitute.org/hc/en-us/articles/360035531112--How-to-Filter-variants-either-with-VQSR-or-by-hard-filtering).
+The `cohort.recalibrated.pass.vep.vcf.gz` is the filtered and [VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)  annotated version of `cohort.recalibrated.vcf.gz` (only variants with `PASS` are kept).
+
+For most applications, the `cohort.recalibrated.pass.vep.vcf.gz` file, is the file you want to continue working with. 
